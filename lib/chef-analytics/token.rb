@@ -90,6 +90,9 @@ module ChefAnalytics
       @expiry < DateTime.now
     end
 
+    def valid?
+      !expired?
+    end
 
     #
     # Class methods

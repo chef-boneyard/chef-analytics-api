@@ -34,7 +34,8 @@ module ChefAnalytics
     end
 
     def token
-      if fs_token = token_from_filesystem
+      fs_token = token_from_filesystem
+      if fs_token
         fs_token
       else
         token_from_signed_request
@@ -60,11 +61,14 @@ module ChefAnalytics
 
     def token_from_filesystem
       if File.exists?(@cache_file_name) && File.readable?(@cache_file_name)
+        Chef::Log.debug("Loading token from FS: #{@cache_file_name}")
         token = ChefAnalytics::Token.from_file(@cache_file_name)
-        unless token.expired?
-          Chef::Log.debug("Found unexpired cached credentials: #{@cache_file_name}")
-          token
+        if token.expired?
+          Chef::Log.debug("Found expired cached credentials: #{@cache_file_name}")
+          return nil
         end
+
+        token
       else
         Chef::Log.debug("Couldn't find cached credentials: #{@cache_file_name}")
         nil
