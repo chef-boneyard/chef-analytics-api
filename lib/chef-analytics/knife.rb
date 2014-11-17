@@ -3,13 +3,7 @@ require 'chef/config'
 
 module ChefAnalytics
   class Knife < Chef::Knife
-    option :identity_server_url,
-      :long         => "--identity-server-url HOST",
-      :description  => "URL of Chef identity server to use"
-
-    option :analytics_server_url,
-      :long         => "--analytics-server-url HOST",
-      :description  => "URL of Chef analytics server to use"
+    attr_accessor :analytics_server_url
 
     def initialize(arg)
       super(arg)
