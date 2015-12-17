@@ -16,6 +16,7 @@
 #
 
 require 'chef/http'
+require 'chef/http/remote_request_id'
 require 'chef/http/json_output'
 require 'chef-analytics/http/token_authenticator'
 
@@ -29,7 +30,7 @@ module ChefAnalytics
       super(url, options)
 
       @authenticator = ChefAnalytics::HTTP::TokenAuthenticator.new(options)
-      @request_id = RemoteRequestID.new(options)
+      @request_id = Chef::HTTP::RemoteRequestID.new(options)
 
       @middlewares << Chef::HTTP::JSONOutput.new(options)
       @middlewares << @authenticator
@@ -41,5 +42,3 @@ module ChefAnalytics
     end
   end
 end
-
-
