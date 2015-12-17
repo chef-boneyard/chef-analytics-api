@@ -20,10 +20,7 @@ module ChefAnalytics
     def fetch_token(options = {})
       identity = ChefAnalytics::Identity.new(options)
       token = identity.token
-      if token.nil?
-        ui.error 'Couldn\'t get OAuth2 token from OC-ID server'
-        exit 1
-      end
+      raise ChefAnalytics::Exception::FetchTokenFailure.new if token.nil?
       token
     end
   end
