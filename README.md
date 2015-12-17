@@ -3,6 +3,13 @@ Chef Analytics Client
 
 ChefAnalytics is an API library for interacting with a Chef analytics Server.
 
+Development
+-----------
+
++ Run `make` to pull down dependencies and run all unit tests.
++ Run `make test` to run unit tests.
++ Please add test coverage if you make a change.
+
 License & Authors
 -----------------
 - Author: James Casey <james@getchef.com>

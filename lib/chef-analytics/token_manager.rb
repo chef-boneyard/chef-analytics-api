@@ -15,16 +15,20 @@
 # limitations under the License.
 #
 
+require 'chef-analytics/identity'
+require 'chef-analytics/exception//fetch_token_failure'
+
 module ChefAnalytics
   module TokenManager
     def fetch_token(options = {})
-      identity = ChefAnalytics::Identity.new(options)
+      identity = get_identity_object(options)
       token = identity.token
-      if token.nil?
-        ui.error 'Couldn\'t get OAuth2 token from OC-ID server'
-        exit 1
-      end
+      raise ChefAnalytics::Exception::FetchTokenException if token.nil?
       token
+    end
+
+    def get_identity_object(options)
+      ChefAnalytics::Identity.new(options)
     end
   end
 end
