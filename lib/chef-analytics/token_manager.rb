@@ -15,13 +15,20 @@
 # limitations under the License.
 #
 
+require 'chef-analytics/identity'
+require 'chef-analytics/exception//fetch_token_failure'
+
 module ChefAnalytics
   module TokenManager
     def fetch_token(options = {})
-      identity = ChefAnalytics::Identity.new(options)
+      identity = get_identity_object(options)
       token = identity.token
-      raise ChefAnalytics::Exception::FetchTokenFailure.new if token.nil?
+      raise ChefAnalytics::Exception::FetchTokenException if token.nil?
       token
+    end
+
+    def get_identity_object(options)
+      ChefAnalytics::Identity.new(options)
     end
   end
 end
